@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Catalog date="2018-02-16T00:00:00+06:00" name="First catalog" number="1">
+  <Element type="Book">
+    <Authors>
+      <Author>Nash Brown</Author>
+      <Author>Emily Polo</Author>
+    </Authors>
+    <City>New York</City>
+    <PublishingHouse>Dorrance</PublishingHouse>
+    <PublishingYear>2015</PublishingYear>
+    <ISBN>111456757</ISBN>
+    <Title>First Book</Title>
+    <PageCount>250</PageCount>
+    <Note>Some note</Note>
+  </Element>
+  <Element type="Newspaper">
+    <City>Washington</City>
+    <PublishingHouse>Greenspun Media Group</PublishingHouse>
+    <PublishingYear>2017</PublishingYear>
+    <Number>354</Number>
+    <Date>2017-02-14T00:00:00+06:00</Date>
+    <ISSN>dtrg567567</ISSN>
+    <Title>First Newspaper</Title>
+    <PageCount>12</PageCount>
+    <Note>Some information</Note>
+  </Element>
+  <Element type="Patent">
+    <Inventors>
+      <Inventor>Adam Boil</Inventor>
+      <Inventor>Cristian Stanly</Inventor>
+    </Inventors>
+    <Country>Canada</Country>
+    <RegistrationNumber>564654</RegistrationNumber>
+    <ApplicationDate>2017-01-14T00:00:00+06:00</ApplicationDate>
+    <PublishingDate>2017-01-24T00:00:00+06:00</PublishingDate>
+    <Title>First Patent</Title>
+    <PageCount>5</PageCount>
+    <Note>Note</Note>
+  </Element>
+  <Element type="Book">
+    <Authors>
+      <Author>Den Smith</Author>
+    </Authors>
+    <City>Springfield</City>
+    <PublishingHouse>Dorrance</PublishingHouse>
+    <PublishingYear>2016</PublishingYear>
+    <ISBN>gjghjjg5647474747</ISBN>
+    <Title>Second Book</Title>
+    <PageCount>154</PageCount>
+    <Note>...</Note>
+  </Element>
+  <Element type="Newspaper">
+    <City>New York</City>
+    <PublishingHouse>Metro Newspapers</PublishingHouse>
+    <PublishingYear>2018</PublishingYear>
+    <Number>45</Number>
+    <Date>2018-01-24T00:00:00+06:00</Date>
+    <ISSN>5448748gjgkhk</ISSN>
+    <Title>Some Newspaper</Title>
+    <PageCount>16</PageCount>
+    <Note>important</Note>
+  </Element>
+  <Element type="Patent">
+    <Inventors>
+      <Inventor>Jon Dow</Inventor>
+    </Inventors>
+    <Country>UK</Country>
+    <RegistrationNumber>5436333</RegistrationNumber>
+    <ApplicationDate>2017-01-24T00:00:00+06:00</ApplicationDate>
+    <PublishingDate>2017-02-28T00:00:00+06:00</PublishingDate>
+    <Title>Second Patent</Title>
+    <PageCount>4</PageCount>
+    <Note>note note</Note>
+  </Element>
+</Catalog>
