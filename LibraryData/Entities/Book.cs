@@ -6,11 +6,28 @@ namespace LibraryData.Entities
     /// <summary>
     /// Represents a book type in collection
     /// </summary>
-    public class Book : BaseElement
+    public class Book : IElement
     {
         /// <summary>
-        /// Gets or sets authors of the book
+        /// Gets or sets element title
         /// </summary>
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets element page count
+        /// </summary>
+        [Required]
+        public int PageCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets elements note
+        /// </summary>
+        public string Note { get; set; }
+        
+        /// <summary>
+        ///  Gets or sets authors of the book
+        ///  </summary>
         [Required]
         public List<string> Authors { get; set; }
 

@@ -11,8 +11,17 @@
         public string CatalogName { get; set; }
 
         /// <summary>
-        /// Gets or sets catalog's namber attribute's value
+        /// Gets or sets catalog's number attribute's value
         /// </summary>
         public int CatalogNumber { get; set; }
+
+        /// <summary>
+        /// Create instance of OutputSettings type with default values
+        /// </summary>
+        public OutputSettings()
+        {
+            CatalogName = "First catalog";
+            CatalogNumber = 1;
+        }
     }
 }

@@ -5,23 +5,23 @@ namespace LibraryData.Entities
     /// <summary>
     /// Represents base type of library collection's elements
     /// </summary>
-    public class BaseElement
+    public interface IElement
     {
         /// <summary>
         /// Gets or sets element title
         /// </summary>
         [Required]
-        public string Title { get; set; }
+        string Title { get; set; }
 
         /// <summary>
         /// Gets or sets element page count
         /// </summary>
         [Required]
-        public int PageCount { get; set; }
+        int PageCount { get; set; }
 
         /// <summary>
         /// Gets or sets elements note
         /// </summary>
-        public string Note { get; set; }
+        string Note { get; set; }
     }
 }

@@ -6,11 +6,28 @@ namespace LibraryData.Entities
     /// <summary>
     /// Represents a newspaper type of library
     /// </summary>
-    public class Newspaper : BaseElement
+    public class Newspaper : IElement
     {
         /// <summary>
-        /// Gets or sets a place of publishing (City)
+        /// Gets or sets element title
         /// </summary>
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets element page count
+        /// </summary>
+        [Required]
+        public int PageCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets elements note
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary> 
+        /// Gets or sets a place of publishing (City)
+        ///  </summary>
         public string City { get; set; }
 
         /// <summary>

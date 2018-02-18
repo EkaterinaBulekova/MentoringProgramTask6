@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Catalog date="2018-02-16T00:00:00+06:00" name="First catalog" number="1">
+  <Element type="FakeBook">
+    <Authors>
+      <Author>Nash Brown</Author>
+      <Author>Emily Polo</Author>
+    </Authors>
+    <Title>First Book</Title>
+    <Count>250</Count>
+    <Date>2017-02-14T00:00:00+06:00</Date>
+  </Element>
+  <Element type="FakePatent">
+    <Inventors>
+      <Inventor>Adam Boil</Inventor>
+      <Inventor>Cristian Stanly</Inventor>
+    </Inventors>
+    <Number>564654</Number>
+    <AppDate>2017-01-14T00:00:00+06:00</AppDate>
+    <Title>First Patent</Title>
+  </Element>
+  <Element type="FakeBook">
+    <Authors>
+      <Author>Den Smith</Author>
+    </Authors>
+    <Title>Second Book</Title>
+    <Count>154</Count>
+    <Date>2018-01-24T00:00:00+06:00</Date>
+  </Element>
+  <Element type="FakePatent">
+    <Inventors>
+      <Inventor>Jon Dow</Inventor>
+    </Inventors>
+    <Number>5436333</Number>
+    <AppDate>2017-01-24T00:00:00+06:00</AppDate>
+    <Title>Second Patent</Title>
+  </Element>
+</Catalog>

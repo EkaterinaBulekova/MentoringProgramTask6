@@ -19,8 +19,12 @@ namespace XMLReaderWriter.Library
         public string ElementName { get; set; }
 
         /// <summary>
-        /// Gets or sets list of library objects' types which should be inherit from one base class
+        /// Create instance of LibrarySettings type with default values
         /// </summary>
-        public List<Type> LibraryTypes { get; set; }
+        public LibrarySettings()
+        {
+            MainElementName = "Catalog";
+            ElementName = "Element";
+        }
     }
 }

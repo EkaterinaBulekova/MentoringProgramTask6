@@ -17,7 +17,6 @@ namespace XMLReaderWriter.Library
         private readonly IEnumerable<T> _source;
         private readonly string _mainElement;
         private readonly string _element;
-        private readonly List<Type> _elementTypes;
 
         /// <summary>
         /// Create instance of Library writer to write a library catalog to stream
@@ -29,7 +28,6 @@ namespace XMLReaderWriter.Library
             _source = source;
             _mainElement = settings.MainElementName;
             _element = settings.ElementName;
-            _elementTypes = settings.LibraryTypes;
         }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace XMLReaderWriter.Library
                 await writer.WriteAttributeStringAsync(null, "number", null, XmlConvert.ToString(outSettings.CatalogNumber));
                 foreach (var item in _source)
                 {
-                    item.ParseToXElement(_element, _elementTypes)?.WriteTo(writer);
+                    item.ParseToXElement(_element)?.WriteTo(writer);
                 }
 
                 await writer.WriteEndElementAsync();
@@ -77,7 +75,7 @@ namespace XMLReaderWriter.Library
                 writer.WriteAttributeString("", "number", "", XmlConvert.ToString(outSettings.CatalogNumber));
                 foreach (var item in _source)
                 {
-                    item.ParseToXElement(_element, _elementTypes)?.WriteTo(writer);
+                    item.ParseToXElement(_element)?.WriteTo(writer);
                 }
 
                 writer.WriteEndElement();

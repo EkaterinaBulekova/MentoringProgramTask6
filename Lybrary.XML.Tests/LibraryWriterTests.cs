@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LibraryData.Entities;
+using Lybrary.XML.Tests.FakeClasses;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XMLReaderWriter.Library;
-using System;
 
 namespace Lybrary.XML.Tests
 {
@@ -13,56 +13,161 @@ namespace Lybrary.XML.Tests
     public class LibraryWriterTests
     {
         [TestMethod]
-        public void CanToWriteTest()
+        public void CanToWriteRealCollectioToRealFileTest()
         {
-            var outSettings = new OutputSettings{CatalogName = "First catalog", CatalogNumber = 1};
-
-            var settings = new LibrarySettings
-            {
-                MainElementName = "Catalog",
-                ElementName = "Element",
-                LibraryTypes = new List<Type> { typeof(Book), typeof(Newspaper), typeof(Patent) }
-            };
-            List<BaseElement> library;
+            List<IElement> library;
+            var settings = new LibrarySettings();
+            var outSettings = new OutputSettings();
             
             var stream = new FileStream(@"D:\project\MentoringProgramTask6\LibraryCatalog1.xml", FileMode.Open);
             using (stream)
             {
-                library = new LibraryReader<BaseElement>(stream, settings).ToList();
+                library = new LibraryReader<IElement>(stream, settings).ToList();
             }
             stream = new FileStream(@"D:\project\MentoringProgramTask6\LibraryCatalog2.xml", FileMode.Create);
             using (stream)
             {
-                var writer = new LibraryWriter<BaseElement>(library, settings);
+                var writer = new LibraryWriter<IElement>(library, settings);
                 writer.WriteXElements(stream, outSettings);
             }
         }
 
         [TestMethod]
-        public async Task CanToWriteAsyncTest()
+        public async Task CanToWriteAsyncRealCollectioToRealFileTest()
         {
-            var outSettings = new OutputSettings { CatalogName = "First catalog", CatalogNumber = 1 };
-
-            var settings = new LibrarySettings
-            {
-                MainElementName = "Catalog",
-                ElementName = "Element",
-                LibraryTypes = new List<Type> { typeof(Book), typeof(Newspaper), typeof(Patent) }
-            };
-            List<BaseElement> library;
+            List<IElement> library;
+            var settings = new LibrarySettings();
+            var outSettings = new OutputSettings();
 
             var stream = new FileStream(@"D:\project\MentoringProgramTask6\LibraryCatalog1.xml", FileMode.Open);
             using (stream)
             {
-                library = new LibraryReader<BaseElement>(stream, settings).ToList();
+                library = new LibraryReader<IElement>(stream, settings).ToList();
             }
 
             stream = new FileStream(@"D:\project\MentoringProgramTask6\AsyncTest.xml", FileMode.Create);
             using (stream)
             {
-                var writer = new LibraryWriter<BaseElement>(library, settings);
+                var writer = new LibraryWriter<IElement>(library, settings);
                 await writer.WriteXElementsAsync(stream, outSettings);
             }
+        }
+
+        [TestMethod]
+        public async Task CanToWriteAsyncIdealCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionIdeal().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                await writer.WriteXElementsAsync(stream, outSettings);
+                stream.Position = 0;
+                result = await new StreamReader(stream).ReadToEndAsync();
+            }
+            Assert.AreEqual(new FakeXmlIdeal().XString, result);
+        }
+
+        [TestMethod]
+        public void CanToWriteIdealCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionIdeal().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                writer.WriteXElements(stream, outSettings);
+                stream.Position = 0;
+                result = new StreamReader(stream).ReadToEnd();
+            }
+
+            var expectedString = new FakeXmlIdeal().XString;
+            Assert.AreEqual(expectedString, result);
+        }
+
+        [TestMethod]
+        public async Task CanToWriteAsyncIdealCollectionToXmlFakeBaseInterfaceTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionIdealINterface().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<IBase>(library, settings);
+                await writer.WriteXElementsAsync(stream, outSettings);
+                stream.Position = 0;
+                result = await new StreamReader(stream).ReadToEndAsync();
+            }
+
+            Assert.AreEqual(new FakeXmlIdeal().XString, result);
+        }
+
+        [TestMethod]
+        public void CanToWriteIdealCollectionToXmlFakeBaseInterfaceTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionIdealINterface().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<IBase>(library, settings);
+                writer.WriteXElements(stream, outSettings);
+                stream.Position = 0;
+                result = new StreamReader(stream).ReadToEnd();
+            }
+
+            var expectedString = new FakeXmlIdeal().XString;
+            Assert.AreEqual(expectedString, result);
+        }
+
+        [TestMethod]
+        public async Task CanToWriteAsyncPoorCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionPoorObj().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                await writer.WriteXElementsAsync(stream, outSettings);
+                stream.Position = 0;
+                result = await new StreamReader(stream).ReadToEndAsync();
+            }
+
+            Assert.AreEqual(new FakeXmlPoor().XString, result);
+        }
+
+        [TestMethod]
+        public void CanToWritePoorCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionPoorObj().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                writer.WriteXElements(stream, outSettings);
+                stream.Position = 0;
+                result = new StreamReader(stream).ReadToEnd();
+            }
+
+            var expectedString = new FakeXmlPoor().XString;
+            Assert.AreEqual(expectedString.Length, result.Length);
+            Assert.AreEqual(expectedString, result);
         }
     }
 }

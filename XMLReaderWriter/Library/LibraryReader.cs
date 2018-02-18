@@ -19,7 +19,7 @@ namespace XMLReaderWriter.Library
         private readonly Stream _inputStream;
         private readonly string _mainElement;
         private readonly string _element;
-        private readonly List<Type> _elementTypes;
+
 
         /// <summary>
         /// Create instance of collection
@@ -31,7 +31,6 @@ namespace XMLReaderWriter.Library
             _inputStream = inputStream;
             _mainElement = settings.MainElementName;
             _element = settings.ElementName;
-            _elementTypes = settings.LibraryTypes;
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace XMLReaderWriter.Library
         /// </summary>
         /// <returns>IEnumerator of base type</returns>
         public IEnumerator<T> GetEnumerator() => GetXElements()
-            .Select(_ => _.ParseToBaseElement<T>(_elementTypes))
+            .Select(_ => _.ParseTo<T>())
             .Where(_ => _ != null).GetEnumerator();
 
         /// <summary>

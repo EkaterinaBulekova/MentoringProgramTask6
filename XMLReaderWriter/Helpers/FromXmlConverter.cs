@@ -10,17 +10,20 @@ namespace XMLReaderWriter.Helpers
 {
     public static class FromXmlConverter
     {
-        public static T ParseToBaseElement<T>(this XElement element, List<Type> types) where T: class 
+        /// <summary>
+        /// Extention method for XElement type that parse XElement to subclass of baseclass T 
+        /// </summary>
+        /// <typeparam name="T">Base class of library</typeparam>
+        /// <param name="element">XElement</param>
+        /// <returns>Instance of base class</returns>
+        public static T ParseTo<T>(this XElement element) where T: class
         {
+            var tp = typeof(T);
+            var types = Assembly.GetAssembly(tp).GetTypes().Where(t => tp.IsAssignableFrom(t)).ToList();
             var typeattr = element.Attribute("type")?.Value;
-            if (typeattr != null)
-            {
-                var tp = types.FirstOrDefault(_ => _.Name == typeattr);
-                if (tp != null)
-                return ParseToBase<T>(element, tp);
-            }
-
-            return null;
+            if (typeattr == null) return null;
+            var type = types.FirstOrDefault(_ => _.Name == typeattr);
+            return type != null ? ParseToBase<T>(element, type) : null;
         }
 
         private static T ParseToBase<T>(XElement element, Type type) where T: class 

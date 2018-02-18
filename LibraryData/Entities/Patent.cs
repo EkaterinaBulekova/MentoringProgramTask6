@@ -7,8 +7,25 @@ namespace LibraryData.Entities
     /// <summary>
     /// Represents a patent type of library
     /// </summary>
-    public class Patent : BaseElement
+    public class Patent : IElement
     {
+        /// <summary>
+        /// Gets or sets element title
+        /// </summary>
+        [Required]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets element page count
+        /// </summary>
+        [Required]
+        public int PageCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets elements note
+        /// </summary>
+        public string Note { get; set; }
+
         /// <summary>
         /// Gets or sets inventors of the patent
         /// </summary>
