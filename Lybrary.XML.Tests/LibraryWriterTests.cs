@@ -6,6 +6,8 @@ using LibraryData.Entities;
 using Lybrary.XML.Tests.FakeClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using XMLReaderWriter.Library;
+using System;
+using System.Xml;
 
 namespace Lybrary.XML.Tests
 {
@@ -168,6 +170,62 @@ namespace Lybrary.XML.Tests
             var expectedString = new FakeXmlPoor().XString;
             Assert.AreEqual(expectedString.Length, result.Length);
             Assert.AreEqual(expectedString, result);
+        }
+
+        [TestMethod]
+        public async Task CanToWriteAsyncFailCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionFailObj().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                await writer.WriteXElementsAsync(stream, outSettings);
+                stream.Position = 0;
+                result = await new StreamReader(stream).ReadToEndAsync();
+            }
+
+            Assert.AreEqual(new FakeXmlFailObj().XString, result);
+        }
+
+        [TestMethod]
+        public void CanToWriteFailCollectionToXmlFakeBaseClassTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionFailObj().ToList();
+            var stream = new MemoryStream();
+            string result;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                writer.WriteXElements(stream, outSettings);
+                stream.Position = 0;
+                result = new StreamReader(stream).ReadToEnd();
+            }
+
+            var expectedString = new FakeXmlFailObj().XString;
+            Assert.AreEqual(expectedString, result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException),
+            "Uncorrect or null parametr")]
+        public void CanToThrowArgumentExceptionTest()
+        {
+            var outSettings = new OutputSettings();
+            var settings = new LibrarySettings();
+            var library = new FakeCollectionFailObj().ToList();
+            var stream = new MemoryStream();
+            settings.MainElementName = null;
+            using (stream)
+            {
+                var writer = new LibraryWriter<BaseClass>(library, settings);
+                writer.WriteXElements(stream, outSettings);
+            }
         }
     }
 }

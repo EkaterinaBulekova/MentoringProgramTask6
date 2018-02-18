@@ -39,13 +39,32 @@ namespace XMLReaderWriter.Library
         /// <returns>IEnumerable of XElement</returns>
         private IEnumerable<XElement> GetXElements()
         {
-            var reader = XmlReader.Create(_inputStream);
-            reader.ReadToFollowing(_mainElement);
-            reader.ReadStartElement();
-
-            while (reader.ReadToNextSibling(_element))
+            using (var reader = XmlReader.Create(_inputStream))
             {
-                if (XNode.ReadFrom(reader) is XElement element) yield return element;
+                try
+                {
+                    reader.ReadToFollowing(_mainElement);
+                    reader.ReadStartElement();
+                }
+                catch (XmlException e)
+                {
+                    throw new XmlException("Uncorrect format of XML data", e);
+                }
+                catch (ArgumentException e)
+                {
+                    throw new ArgumentException("Uncorrect or null start(main) Element parametr", e);
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new InvalidOperationException("Invalid operation to read XML", e);
+                }
+
+                while (reader.ReadToNextSibling(_element)) 
+                {
+                    if (XNode.ReadFrom(reader) is XElement element) yield return element;
+                }
+
+                reader.Close();
             }
         }
 

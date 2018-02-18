@@ -30,7 +30,7 @@ namespace XMLReaderWriter.Helpers
             var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList();
             if (properties.Where(p => p.CustomAttributes.Any(a => a.AttributeType == typeof(RequiredAttribute)))
                 .Any(p => p.GetValue(element) == null ||
-                          p.PropertyType.IsValueType && p.GetValue(element) == p.PropertyType.GetDefault()))
+                          p.PropertyType.IsValueType && p.GetValue(element).Equals(p.PropertyType.GetDefault())))
             {
                 return null;
             }

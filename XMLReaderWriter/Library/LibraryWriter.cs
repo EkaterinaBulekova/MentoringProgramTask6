@@ -47,10 +47,11 @@ namespace XMLReaderWriter.Library
                     XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
                 await writer.WriteAttributeStringAsync(null, "name", null, outSettings.CatalogName);
                 await writer.WriteAttributeStringAsync(null, "number", null, XmlConvert.ToString(outSettings.CatalogNumber));
-                foreach (var item in _source)
-                {
-                    item.ParseToXElement(_element)?.WriteTo(writer);
-                }
+                if (_source != null)
+                    foreach (var item in _source)
+                    {
+                        item.ParseToXElement(_element)?.WriteTo(writer);
+                    }
 
                 await writer.WriteEndElementAsync();
                 await writer.FlushAsync();
@@ -68,18 +69,35 @@ namespace XMLReaderWriter.Library
 
             using (var writer = XmlWriter.Create(outputStream, settings))
             {
-                writer.WriteStartElement(_mainElement);
-                writer.WriteAttributeString("", "date", "",
-                    XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
-                writer.WriteAttributeString("", "name", "", outSettings.CatalogName);
-                writer.WriteAttributeString("", "number", "", XmlConvert.ToString(outSettings.CatalogNumber));
-                foreach (var item in _source)
+                try
                 {
-                    item.ParseToXElement(_element)?.WriteTo(writer);
-                }
+                    writer.WriteStartElement(_mainElement);
+                    writer.WriteAttributeString("", "date", "",
+                        XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
+                    writer.WriteAttributeString("", "name", "", outSettings.CatalogName);
+                    writer.WriteAttributeString("", "number", "", XmlConvert.ToString(outSettings.CatalogNumber));
+                    if (_source != null)
+                        foreach (var item in _source)
+                        {
+                            item.ParseToXElement(_element)?.WriteTo(writer);
+                        }
 
-                writer.WriteEndElement();
-                writer.Close();
+                    writer.WriteEndElement();
+                    writer.Close();
+
+                }
+                catch (XmlException e)
+                {
+                    throw new XmlException("Couldn't create XML data", e);
+                }
+                catch (ArgumentException e)
+                {
+                    throw new ArgumentException("Uncorrect or null parametr", e);
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new InvalidOperationException("Invalid operation to write XML", e);
+                }
             }
         }
     }

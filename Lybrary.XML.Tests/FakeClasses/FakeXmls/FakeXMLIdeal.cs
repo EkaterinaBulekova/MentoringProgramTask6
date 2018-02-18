@@ -6,7 +6,6 @@ namespace Lybrary.XML.Tests.FakeClasses
     internal class FakeXmlIdeal
     {
         public string XString { get; set; }
-        public string X1 { get; set; }
 
         public FakeXmlIdeal()
         {

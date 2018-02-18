@@ -50,15 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakeClasses\BaseClass.cs" />
-    <Compile Include="FakeClasses\FakeBook.cs" />
-    <Compile Include="FakeClasses\IFakeCollectionIdeal.cs" />
-    <Compile Include="FakeClasses\FakeCollectionPoorObj.cs" />
-    <Compile Include="FakeClasses\FakeCollectionIdeal.cs" />
-    <Compile Include="FakeClasses\FakePatent.cs" />
-    <Compile Include="FakeClasses\FakeXMLIdeal.cs" />
-    <Compile Include="FakeClasses\FakeXMLPoor.cs" />
-    <Compile Include="FakeClasses\IBase.cs" />
+    <Compile Include="FakeClasses\FakeEntities\BaseClass.cs" />
+    <Compile Include="FakeClasses\FakeEntities\FakeBook.cs" />
+    <Compile Include="FakeClasses\FakeCollections\FakeCollectionFail.cs" />
+    <Compile Include="FakeClasses\FakeCollections\FakeCollectionFailObj.cs" />
+    <Compile Include="FakeClasses\FakeXmls\FakeXMLCrash.cs" />
+    <Compile Include="FakeClasses\FakeXmls\FakeXMLFailObj.cs" />
+    <Compile Include="FakeClasses\FakeXmls\FakeXMLFail.cs" />
+    <Compile Include="FakeClasses\FakeCollections\IFakeCollectionIdeal.cs" />
+    <Compile Include="FakeClasses\FakeCollections\FakeCollectionPoorObj.cs" />
+    <Compile Include="FakeClasses\FakeCollections\FakeCollectionIdeal.cs" />
+    <Compile Include="FakeClasses\FakeEntities\FakePatent.cs" />
+    <Compile Include="FakeClasses\FakeXmls\FakeXMLIdeal.cs" />
+    <Compile Include="FakeClasses\FakeXmls\FakeXMLPoor.cs" />
+    <Compile Include="FakeClasses\FakeEntities\IBase.cs" />
     <Compile Include="LibraryWriterTests.cs" />
     <Compile Include="LibraryReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
