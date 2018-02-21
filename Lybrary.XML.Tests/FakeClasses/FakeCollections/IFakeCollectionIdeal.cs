@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Lybrary.XML.Tests.FakeClasses.FakeEntities;
 
-namespace Lybrary.XML.Tests.FakeClasses
+namespace Lybrary.XML.Tests.FakeClasses.FakeCollections
 {
     internal class FakeCollectionIdealINterface : IEnumerable<IBase>
     {

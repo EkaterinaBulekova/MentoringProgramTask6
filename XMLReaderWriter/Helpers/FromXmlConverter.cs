@@ -5,6 +5,7 @@ using System.Xml;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using XMLReaderWriter.LibraryLogger;
 
 namespace XMLReaderWriter.Helpers
 {

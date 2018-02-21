@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using XMLReaderWriter.Helpers;
+using XMLReaderWriter.LibraryLogger;
+using XMLReaderWriter.Resources;
 
 namespace XMLReaderWriter.Library
 {
@@ -12,11 +14,15 @@ namespace XMLReaderWriter.Library
     /// streams that contain XML data from generic collection.
     /// </summary>
     /// <typeparam name="T">Base type of source collection's items</typeparam>
-    public class LibraryWriter<T> where T: class 
+    public class LibraryWriter<T> where T: class
     {
+        private const string DateAttr = "date";
+        private const string NameAttr = "name";
+        private const string NumberAttr = "number";
         private readonly IEnumerable<T> _source;
         private readonly string _mainElement;
         private readonly string _element;
+        private int _current;
 
         /// <summary>
         /// Create instance of Library writer to write a library catalog to stream
@@ -28,6 +34,7 @@ namespace XMLReaderWriter.Library
             _source = source;
             _mainElement = settings.MainElementName;
             _element = settings.ElementName;
+            _current = 0;
         }
 
         /// <summary>
@@ -42,19 +49,44 @@ namespace XMLReaderWriter.Library
 
             using (var writer = XmlWriter.Create(outputStream, settings))
             {
-                await writer.WriteStartElementAsync(null, _mainElement, null);
-                await writer.WriteAttributeStringAsync(null, "date", null,
-                    XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
-                await writer.WriteAttributeStringAsync(null, "name", null, outSettings.CatalogName);
-                await writer.WriteAttributeStringAsync(null, "number", null, XmlConvert.ToString(outSettings.CatalogNumber));
-                if (_source != null)
-                    foreach (var item in _source)
-                    {
-                        item.ParseToXElement(_element)?.WriteTo(writer);
-                    }
+                try
+                {
+                    await writer.WriteStartElementAsync(null, _mainElement, null);
+                    await writer.WriteAttributeStringAsync(null, DateAttr, null,
+                        XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
+                    await writer.WriteAttributeStringAsync(null, NameAttr, null, outSettings.CatalogName);
+                    await writer.WriteAttributeStringAsync(null, NumberAttr, null,
+                        XmlConvert.ToString(outSettings.CatalogNumber));
+                    if (_source != null)
+                        foreach (var item in _source)
+                        {
+                            _current++;
+                            var xElement = item.ParseToXElement(_element);
+                            if (xElement == null)
+                                Logger.Log(WriterExcMessages.UncorrectObject + _element + WriterExcMessages.Index +
+                                           _current);
+                            else
+                                xElement.WriteTo(writer);
+                        }
 
-                await writer.WriteEndElementAsync();
-                await writer.FlushAsync();
+                    await writer.WriteEndElementAsync();
+                    await writer.FlushAsync();
+                }
+                catch (XmlException e)
+                {
+                    Logger.Log(ReaderExcMessages.XMLException, e);
+                    throw new XmlException(WriterExcMessages.XMLException, e);
+                }
+                catch (ArgumentException e)
+                {
+                    Logger.Log(ReaderExcMessages.ArgumentException, e);
+                    throw new ArgumentException(WriterExcMessages.ArgumentException, e);
+                }
+                catch (InvalidOperationException e)
+                {
+                    Logger.Log(ReaderExcMessages.InvalidOperationException, e);
+                    throw new InvalidOperationException(WriterExcMessages.InvalidOperationException, e);
+                }
             }
         }
 
@@ -72,14 +104,20 @@ namespace XMLReaderWriter.Library
                 try
                 {
                     writer.WriteStartElement(_mainElement);
-                    writer.WriteAttributeString("", "date", "",
+                    writer.WriteAttributeString(string.Empty, DateAttr, string.Empty,
                         XmlConvert.ToString(DateTime.Today.Date, XmlDateTimeSerializationMode.Local));
-                    writer.WriteAttributeString("", "name", "", outSettings.CatalogName);
-                    writer.WriteAttributeString("", "number", "", XmlConvert.ToString(outSettings.CatalogNumber));
+                    writer.WriteAttributeString(string.Empty, NameAttr, string.Empty, outSettings.CatalogName);
+                    writer.WriteAttributeString(string.Empty, NumberAttr, string.Empty, XmlConvert.ToString(outSettings.CatalogNumber));
                     if (_source != null)
                         foreach (var item in _source)
                         {
-                            item.ParseToXElement(_element)?.WriteTo(writer);
+                            _current++;
+                            var xElement = item.ParseToXElement(_element);
+                            if (xElement == null)
+                                Logger.Log(WriterExcMessages.UncorrectObject + _element + WriterExcMessages.Index +
+                                           _current);
+                            else
+                                xElement.WriteTo(writer);
                         }
 
                     writer.WriteEndElement();
@@ -88,15 +126,18 @@ namespace XMLReaderWriter.Library
                 }
                 catch (XmlException e)
                 {
-                    throw new XmlException("Couldn't create XML data", e);
+                    Logger.Log(ReaderExcMessages.XMLException, e);
+                    throw new XmlException(WriterExcMessages.XMLException, e);
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException("Uncorrect or null parametr", e);
+                    Logger.Log(ReaderExcMessages.ArgumentException, e);
+                    throw new ArgumentException(WriterExcMessages.ArgumentException, e);
                 }
                 catch (InvalidOperationException e)
                 {
-                    throw new InvalidOperationException("Invalid operation to write XML", e);
+                    Logger.Log(ReaderExcMessages.InvalidOperationException, e);
+                    throw new InvalidOperationException(WriterExcMessages.InvalidOperationException, e);
                 }
             }
         }

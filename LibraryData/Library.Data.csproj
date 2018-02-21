@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\BaseElement.cs" />
+    <Compile Include="Entities\IElement.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Newspaper.cs" />
     <Compile Include="Entities\Patent.cs" />

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using XMLReaderWriter.Helpers;
+using XMLReaderWriter.LibraryLogger;
+using XMLReaderWriter.Resources;
 
 namespace XMLReaderWriter.Library
 {
@@ -19,6 +21,7 @@ namespace XMLReaderWriter.Library
         private readonly Stream _inputStream;
         private readonly string _mainElement;
         private readonly string _element;
+        private int _current;
 
 
         /// <summary>
@@ -31,6 +34,7 @@ namespace XMLReaderWriter.Library
             _inputStream = inputStream;
             _mainElement = settings.MainElementName;
             _element = settings.ElementName;
+            _current = 0;
         }
 
         /// <summary>
@@ -48,20 +52,24 @@ namespace XMLReaderWriter.Library
                 }
                 catch (XmlException e)
                 {
-                    throw new XmlException("Uncorrect format of XML data", e);
+                    Logger.Log(ReaderExcMessages.XMLException, e);
+                    throw new XmlException(ReaderExcMessages.XMLException, e);
                 }
                 catch (ArgumentException e)
                 {
-                    throw new ArgumentException("Uncorrect or null start(main) Element parametr", e);
+                    Logger.Log(ReaderExcMessages.ArgumentException, e);
+                    throw new ArgumentException(ReaderExcMessages.ArgumentException, e);
                 }
                 catch (InvalidOperationException e)
                 {
-                    throw new InvalidOperationException("Invalid operation to read XML", e);
+                    Logger.Log(ReaderExcMessages.InvalidOperationException, e);
+                    throw new InvalidOperationException(ReaderExcMessages.InvalidOperationException, e);
                 }
 
                 while (reader.ReadToNextSibling(_element)) 
                 {
                     if (XNode.ReadFrom(reader) is XElement element) yield return element;
+                    else Logger.Log(ReaderExcMessages.InvalidXmlElement);
                 }
 
                 reader.Close();
@@ -73,7 +81,14 @@ namespace XMLReaderWriter.Library
         /// </summary>
         /// <returns>IEnumerator of base type</returns>
         public IEnumerator<T> GetEnumerator() => GetXElements()
-            .Select(_ => _.ParseTo<T>())
+            .Select(_ =>
+            {
+                var element = _.ParseTo<T>();
+                _current++;
+                if(element==null)
+                    Logger.Log(ReaderExcMessages.UncorrectXmlElement + _element + ReaderExcMessages.Index + _current);
+                return element;
+            })
             .Where(_ => _ != null).GetEnumerator();
 
         /// <summary>

@@ -41,6 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LibraryLogger\Logger.cs" />
+    <Compile Include="Resources\LogerPath.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogerPath.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WriterExcMessages.Designer.cs">
+      <DependentUpon>WriterExcMessages.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ReaderExcMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReaderExcMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Library\LibraryReader.cs" />
     <Compile Include="Library\LibrarySettings.cs" />
     <Compile Include="Library\LibraryWriter.cs" />
@@ -49,5 +65,20 @@
     <Compile Include="Library\OutputSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LogerPath.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogerPath.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WriterExcMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WriterExcMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ReaderExcMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReaderExcMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

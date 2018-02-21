@@ -1,6 +1,6 @@
-﻿namespace Lybrary.XML.Tests.FakeClasses
+﻿namespace Lybrary.XML.Tests.FakeClasses.FakeEntities
 {
-    interface IBase
+    internal interface IBase
     {
     }
 }

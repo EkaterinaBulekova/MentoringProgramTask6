@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace Lybrary.XML.Tests.FakeClasses
+namespace Lybrary.XML.Tests.FakeClasses.FakeXmls
 {
     internal class FakeXmlCrash
     {

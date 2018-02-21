@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace XMLReaderWriter.Library
+﻿namespace XMLReaderWriter.Library
 {
     /// <summary>
     /// Represents settings for Library elements and types 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lybrary.XML.Tests.FakeClasses.FakeEntities;
 
-namespace Lybrary.XML.Tests.FakeClasses
+namespace Lybrary.XML.Tests.FakeClasses.FakeCollections
 {
     internal class FakeCollectionPoorObj : IEnumerable<BaseClass>
     {

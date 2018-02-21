@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lybrary.XML.Tests.FakeClasses
+namespace Lybrary.XML.Tests.FakeClasses.FakeEntities
 {
     internal class BaseClass 
     {
